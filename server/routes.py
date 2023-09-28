@@ -14,7 +14,6 @@ async def get_ingredient(ingredient_id: PydanticObjectId) -> Ingredient:
         raise HTTPException(status_code=404, detail="ingredient not found")
     return ingredient
 
-
 # CRUD
 
 @ingredients_router.post("/ingredients/", response_model=Ingredient)
