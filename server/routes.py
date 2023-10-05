@@ -2,13 +2,14 @@ from typing import List,Any,Dict
 
 from beanie import PydanticObjectId
 from fastapi import APIRouter, HTTPException, Depends
-from .models import Ingredient, Recipe, MealPlan, FoodInMealPlan, StatusModel, Statuses
+from .models import Ingredient, Recipe, MealPlan, FoodInMealPlan, StatusModel, Statuses, User, FoodInMealPlan, MeasureUnit, MeasuresUnit, USAStates, UserRole
 from .models import get_recipe_by_name, foods_dict_to_list
 
 
 ingredients_router= APIRouter()
 recipes_router= APIRouter()
 mealplans_router= APIRouter()
+users_router= APIRouter()
 
 
 #######################################
@@ -182,4 +183,53 @@ async def add_mealplan(mealplan_id: PydanticObjectId, mealplan_data: Dict[str, A
 @mealplans_router.delete("/mealplans/{mealplan_id}", response_model=StatusModel)
 async def delete_mealplan(mealplan: MealPlan = Depends(get_mealplan)):
     await mealplan.delete()
+    return StatusModel(status=Statuses.DELETED)
+
+#######################################
+######  USER   ########
+#######################################
+async def get_user(user_id: PydanticObjectId) -> User:
+    user = await User.get(user_id)
+    if user is None:
+        raise HTTPException(status_code=404, detail="user not found")
+    return user
+
+
+    
+#######  GET  ##########
+@users_router.get("/users/{user_id}", response_model=User)
+async def get_user_by_id(user: User = Depends(get_user)):
+    return user
+
+@users_router.get("/users/", response_model=List[User])
+async def get_all_users():
+    return await User.find_all().to_list()
+    
+#######  POST  ##########
+@users_router.post("/users/", response_model=User)
+async def create_user(user: User):   
+    await user.create()
+    return user
+
+#######  PUT  ##########
+# Complete replace
+@users_router.put("/users/{user_id}", response_model=User)
+async def update_user(user_data: User, user: User = Depends(get_user)):
+    fields_to_update = user_data.dict()
+    fields_to_update.pop("_id",None) 
+    user_updated = await user.update({"$set": fields_to_update})
+    return user_updated
+
+# Partial replace
+@users_router.put("/users/{user_id}/update", response_model=User)
+async def update_user(user_id: PydanticObjectId, user_data: Dict[str, Any]):
+    user = await User.get(user_id)   
+    await user.update({"$set": user_data})
+    return user
+
+
+#######  DELETE  ##########
+@users_router.delete("/users/{user_id}", response_model=StatusModel)
+async def delete_user(user: User = Depends(get_user)):
+    await user.delete()
     return StatusModel(status=Statuses.DELETED)
