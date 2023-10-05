@@ -1,9 +1,11 @@
 from beanie import Document, Indexed
 from pydantic.fields import Field
-from pydantic import BaseModel, EmailStr, validator
+from pydantic import BaseModel, EmailStr, validator, PositiveInt
 from enum import Enum
 from typing import Optional, List
 from datetime import datetime
+from pydantic_extra_types.phone_numbers import PhoneNumber
+
 
 
 class IngredientType(str,Enum): 
@@ -158,6 +160,11 @@ class UserRole(str,Enum):
     GESTOR = 'GESTOR'  
     APPUSER = 'APPUSER'  
 
+class Gender(str,Enum): 
+    MALE = 'MALE'  
+    FAMALE = 'FAMELE'  
+    NOBINARY = 'NOBINARY'  
+
 class User(Document):  
     name: str
     surname: str
@@ -166,6 +173,37 @@ class User(Document):
     email: EmailStr
     role: UserRole
     is_active: bool = True
+    created_at: datetime = Field(default_factory=datetime.utcnow, auto_now_add=True)
+    updated_at: datetime = Field(default_factory=datetime.utcnow, auto_now=True)
+
+
+class HealthProfile(BaseModel):  
+    daibetisc: bool=False
+
+
+class FoodsProfile(BaseModel):  
+    celiac: bool=False
+
+
+class HabitsProfile(BaseModel):  
+    week_sport_hours: PositiveInt
+
+
+class UserProfile(Document):  
+    user_id: str
+    user_alias: str
+    phone_number: PhoneNumber
+    gender: Gender
+    zipcode: PositiveInt
+    city: str
+    state: USAStates
+    nationality: str
+    metric_unit: MeasureUnit
+    height: PositiveInt
+    starting_weight: PositiveInt
+    health_profile: Optional[HealthProfile] = None
+    foods_profile: Optional[FoodsProfile] = None
+    habits_profile: Optional[HabitsProfile] = None
     created_at: datetime = Field(default_factory=datetime.utcnow, auto_now_add=True)
     updated_at: datetime = Field(default_factory=datetime.utcnow, auto_now=True)
 

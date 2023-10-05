@@ -2,7 +2,7 @@ from typing import List,Any,Dict
 
 from beanie import PydanticObjectId
 from fastapi import APIRouter, HTTPException, Depends
-from .models import Ingredient, Recipe, MealPlan, FoodInMealPlan, StatusModel, Statuses, User, FoodInMealPlan, MeasureUnit, MeasuresUnit, USAStates, UserRole
+from .models import Ingredient, Recipe, MealPlan, FoodInMealPlan, StatusModel, Statuses, User, FoodInMealPlan, UserProfile
 from .models import get_recipe_by_name, foods_dict_to_list
 
 
@@ -10,6 +10,7 @@ ingredients_router= APIRouter()
 recipes_router= APIRouter()
 mealplans_router= APIRouter()
 users_router= APIRouter()
+userprofiles_router= APIRouter()
 
 
 #######################################
@@ -232,4 +233,53 @@ async def update_user(user_id: PydanticObjectId, user_data: Dict[str, Any]):
 @users_router.delete("/users/{user_id}", response_model=StatusModel)
 async def delete_user(user: User = Depends(get_user)):
     await user.delete()
+    return StatusModel(status=Statuses.DELETED)
+
+#######################################
+######  USERPROFILE   ########
+#######################################
+async def get_userprofile(userprofile_id: PydanticObjectId) -> UserProfile:
+    userprofile = await UserProfile.get(userprofile_id)
+    if userprofile is None:
+        raise HTTPException(status_code=404, detail="userprofile not found")
+    return userprofile
+
+
+    
+#######  GET  ##########
+@userprofiles_router.get("/userprofiles/{userprofile_id}", response_model=UserProfile)
+async def get_userprofile_by_id(userprofile: UserProfile = Depends(get_userprofile)):
+    return userprofile
+
+@userprofiles_router.get("/userprofiles/", response_model=List[UserProfile])
+async def get_all_userprofiles():
+    return await UserProfile.find_all().to_list()
+    
+#######  POST  ##########
+@userprofiles_router.post("/userprofiles/", response_model=UserProfile)
+async def create_userprofile(userprofile: UserProfile):   
+    await userprofile.create()
+    return userprofile
+
+#######  PUT  ##########
+# Complete replace
+@userprofiles_router.put("/userprofiles/{userprofile_id}", response_model=UserProfile)
+async def update_userprofile(userprofile_data: UserProfile, userprofile: UserProfile = Depends(get_userprofile)):
+    fields_to_update = userprofile_data.dict()
+    fields_to_update.pop("_id",None) 
+    userprofile_updated = await userprofile.update({"$set": fields_to_update})
+    return userprofile_updated
+
+# Partial replace
+@userprofiles_router.put("/userprofiles/{userprofile_id}/update", response_model=UserProfile)
+async def update_userprofile(userprofile_id: PydanticObjectId, userprofile_data: Dict[str, Any]):
+    userprofile = await UserProfile.get(userprofile_id)   
+    await userprofile.update({"$set": userprofile_data})
+    return userprofile
+
+
+#######  DELETE  ##########
+@userprofiles_router.delete("/userprofiles/{userprofile_id}", response_model=StatusModel)
+async def delete_userprofile(userprofile: UserProfile = Depends(get_userprofile)):
+    await userprofile.delete()
     return StatusModel(status=Statuses.DELETED)
