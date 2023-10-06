@@ -176,6 +176,11 @@ class User(Document):
     created_at: datetime = Field(default_factory=datetime.utcnow, auto_now_add=True)
     updated_at: datetime = Field(default_factory=datetime.utcnow, auto_now=True)
 
+async def get_user_by_name(name: str) -> User:
+    user = await User.find_one(User.alias == name)
+    if user is None:
+        return None
+    return user
 
 class HealthProfile(BaseModel):  
     daibetisc: bool=False

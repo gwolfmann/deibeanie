@@ -2,8 +2,8 @@ from typing import List,Any,Dict
 
 from beanie import PydanticObjectId
 from fastapi import APIRouter, HTTPException, Depends
-from .models import Ingredient, Recipe, MealPlan, FoodInMealPlan, StatusModel, Statuses, User, FoodInMealPlan, UserProfile
-from .models import get_recipe_by_name, foods_dict_to_list
+from .models import Ingredient, Recipe, MealPlan, FoodInMealPlan, StatusModel, Statuses, User, UserProfile
+from .models import get_recipe_by_name, foods_dict_to_list, get_user_by_name
 
 
 ingredients_router= APIRouter()
@@ -23,6 +23,8 @@ async def get_ingredient(ingredient_id: PydanticObjectId) -> Ingredient:
     return ingredient
 
 
+
+
     
 #######  GET  ##########
 @ingredients_router.get("/ingredients/{ingredient_id}", response_model=Ingredient)
@@ -36,6 +38,7 @@ async def get_all_ingredients():
 #######  POST  ##########
 @ingredients_router.post("/ingredients/", response_model=Ingredient)
 async def create_ingredient(ingredient: Ingredient):   
+    
     await ingredient.create()
     return ingredient
 
@@ -75,6 +78,8 @@ async def check_recipe_exists(recipe_name: str) -> bool:
     recipe = await get_recipe_by_name(recipe_name)
     return not(recipe is None)
 
+
+
     
 #######  GET  ##########
 @recipes_router.get("/recipes/{recipe_id}", response_model=Recipe)
@@ -88,6 +93,7 @@ async def get_all_recipes():
 #######  POST  ##########
 @recipes_router.post("/recipes/", response_model=Recipe)
 async def create_recipe(recipe: Recipe):   
+    
     await recipe.create()
     return recipe
 
@@ -124,6 +130,8 @@ async def get_mealplan(mealplan_id: PydanticObjectId) -> MealPlan:
         raise HTTPException(status_code=404, detail="mealplan not found")
     return mealplan
 
+
+
    
 async def check_recipes_ok(foods:List[FoodInMealPlan]) -> bool:
     result = True
@@ -146,6 +154,7 @@ async def create_mealplan(mealplan: MealPlan):
     recipe_name_ok = await check_recipes_ok(mealplan.foods)
     if not recipe_name_ok:
         raise HTTPException(status_code=404, detail="mealplan contains a recipe undefined")
+    
     await mealplan.create()
     return mealplan
 
@@ -195,6 +204,14 @@ async def get_user(user_id: PydanticObjectId) -> User:
         raise HTTPException(status_code=404, detail="user not found")
     return user
 
+async def check_user_exists(user_name: str) -> bool:
+    user = await get_user_by_name(user_name)
+    return not(user is None)
+
+async def check_user_id_exists(user_id: str) -> bool:
+    user = await get_user(user_id)
+    return not(user is None)
+
 
     
 #######  GET  ##########
@@ -209,6 +226,7 @@ async def get_all_users():
 #######  POST  ##########
 @users_router.post("/users/", response_model=User)
 async def create_user(user: User):   
+    
     await user.create()
     return user
 
@@ -245,6 +263,14 @@ async def get_userprofile(userprofile_id: PydanticObjectId) -> UserProfile:
     return userprofile
 
 
+   
+async def check_user_alias_valid(user_alias_value:str) -> bool:
+    result = await check_user_exists(user_alias_value)
+    return result   
+async def check_user_id_valid(user_id_value:str) -> bool:
+    result = await check_user_id_exists(user_id_value)
+    return result
+
     
 #######  GET  ##########
 @userprofiles_router.get("/userprofiles/{userprofile_id}", response_model=UserProfile)
@@ -258,6 +284,13 @@ async def get_all_userprofiles():
 #######  POST  ##########
 @userprofiles_router.post("/userprofiles/", response_model=UserProfile)
 async def create_userprofile(userprofile: UserProfile):   
+       
+    user_alias_ok = await check_user_alias_valid(userprofile.user_alias)
+    if not user_alias_ok:
+        raise HTTPException(status_code=404, detail="userprofile contains a user_alias invalid")   
+    user_id_ok = await check_user_id_valid(userprofile.user_id)
+    if not user_id_ok:
+        raise HTTPException(status_code=404, detail="userprofile contains a user_id invalid")
     await userprofile.create()
     return userprofile
 
