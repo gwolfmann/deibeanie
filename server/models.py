@@ -1,11 +1,10 @@
 from beanie import Document, Indexed
 from pydantic.fields import Field
-from pydantic import BaseModel, EmailStr, PositiveInt
+from pydantic import BaseModel, EmailStr, PositiveInt, computed_field
 from enum import Enum
 from typing import Optional, List
 from datetime import datetime
 from pydantic_extra_types.phone_numbers import PhoneNumber
-from pydantic_computed import Computed, computed
 
 
 
@@ -211,6 +210,7 @@ class HabitsProfile(BaseModel):
     dairy_freq: int
     proteins_freq: int
 
+
 class UserProfile(Document):  
     user_id: str
     user_alias: str
@@ -228,20 +228,11 @@ class UserProfile(Document):
     habits_profile: Optional[HabitsProfile] = None
     created_at: datetime = Field(default_factory=datetime.utcnow, auto_now_add=True)
     updated_at: datetime = Field(default_factory=datetime.utcnow, auto_now=True)
-    bmi = Computed[int]
 
 
-    def has_health_profile(self) -> bool:
-        return self.health_profile is not None
-
-    def has_foods_profile(self) -> bool:
-        return self.foods_profile is not None
-
-    def has_habits_profile(self) -> bool:
-        return self.habits_profile is not None
-
-    @computed('bmi') 
-    def calculate_bmi(self):
+    @computed_field
+    @property
+    def bmi(self) -> float:
         """
         Calculate the BMI (Body Mass Index) based on user's weight and height.
 
@@ -255,4 +246,13 @@ class UserProfile(Document):
             height_m = self.height / 100  # Convert cm to meters
             weight_kg = self.starting_weight
         bmi = weight_kg / (height_m ** 2)
-        return bmi    
+        return bmi
+
+    def has_health_profile(self) -> bool:
+        return self.health_profile is not None
+
+    def has_foods_profile(self) -> bool:
+        return self.foods_profile is not None
+
+    def has_habits_profile(self) -> bool:
+        return self.habits_profile is not None    
