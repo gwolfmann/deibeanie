@@ -47,7 +47,8 @@ async def create_ingredient(ingredient: Ingredient):
 @ingredients_router.put("/ingredients/{ingredient_id}", response_model=Ingredient)
 async def update_ingredient(ingredient_data: Ingredient, ingredient: Ingredient = Depends(get_ingredient)):
     fields_to_update = ingredient_data.dict()
-    fields_to_update.pop("_id",None) 
+    fields_to_update.pop("_id",None)     
+    
     ingredient_updated = await ingredient.update({"$set": fields_to_update})
     return ingredient_updated
 
@@ -55,7 +56,10 @@ async def update_ingredient(ingredient_data: Ingredient, ingredient: Ingredient 
 @ingredients_router.put("/ingredients/{ingredient_id}/update", response_model=Ingredient)
 async def update_ingredient(ingredient_id: PydanticObjectId, ingredient_data: Dict[str, Any]):
     ingredient = await Ingredient.get(ingredient_id)   
-    await ingredient.update({"$set": ingredient_data})
+    
+    fields_to_update = ingredient_data
+    fields_to_update.pop("_id",None)     
+    await ingredient.update({"$set": fields_to_update})
     return ingredient
 
 
@@ -102,7 +106,8 @@ async def create_recipe(recipe: Recipe):
 @recipes_router.put("/recipes/{recipe_id}", response_model=Recipe)
 async def update_recipe(recipe_data: Recipe, recipe: Recipe = Depends(get_recipe)):
     fields_to_update = recipe_data.dict()
-    fields_to_update.pop("_id",None) 
+    fields_to_update.pop("_id",None)     
+    
     await recipe.update({"$set": {"ingredients": []}})
     recipe_updated = await recipe.update({"$set": fields_to_update})
     return recipe_updated
@@ -111,7 +116,10 @@ async def update_recipe(recipe_data: Recipe, recipe: Recipe = Depends(get_recipe
 @recipes_router.put("/recipes/{recipe_id}/update", response_model=Recipe)
 async def update_recipe(recipe_id: PydanticObjectId, recipe_data: Dict[str, Any]):
     recipe = await Recipe.get(recipe_id)   
-    await recipe.update({"$set": recipe_data})
+    
+    fields_to_update = recipe_data
+    fields_to_update.pop("_id",None)     
+    await recipe.update({"$set": fields_to_update})
     return recipe
 
 
@@ -163,7 +171,8 @@ async def create_mealplan(mealplan: MealPlan):
 @mealplans_router.put("/mealplans/{mealplan_id}", response_model=MealPlan)
 async def update_mealplan(mealplan_data: MealPlan, mealplan: MealPlan = Depends(get_mealplan)):
     fields_to_update = mealplan_data.dict()
-    fields_to_update.pop("_id",None) 
+    fields_to_update.pop("_id",None)     
+    
     await mealplan.update({"$set": {"foods": []}})
     mealplan_updated = await mealplan.update({"$set": fields_to_update})
     return mealplan_updated
@@ -176,7 +185,10 @@ async def update_mealplan(mealplan_id: PydanticObjectId, mealplan_data: Dict[str
         recipe_name_ok = await check_recipes_ok(foods_dict_to_list(mealplan_data.get('foods')))
         if not recipe_name_ok:
             raise HTTPException(status_code=404, detail="mealplan contains a recipe undefined")
-    await mealplan.update({"$set": mealplan_data})
+    
+    fields_to_update = mealplan_data
+    fields_to_update.pop("_id",None)     
+    await mealplan.update({"$set": fields_to_update})
     return mealplan
 
 #Put for add a meal to a plan
@@ -235,7 +247,8 @@ async def create_user(user: User):
 @users_router.put("/users/{user_id}", response_model=User)
 async def update_user(user_data: User, user: User = Depends(get_user)):
     fields_to_update = user_data.dict()
-    fields_to_update.pop("_id",None) 
+    fields_to_update.pop("_id",None)     
+    
     user_updated = await user.update({"$set": fields_to_update})
     return user_updated
 
@@ -243,7 +256,10 @@ async def update_user(user_data: User, user: User = Depends(get_user)):
 @users_router.put("/users/{user_id}/update", response_model=User)
 async def update_user(user_id: PydanticObjectId, user_data: Dict[str, Any]):
     user = await User.get(user_id)   
-    await user.update({"$set": user_data})
+    
+    fields_to_update = user_data
+    fields_to_update.pop("_id",None)     
+    await user.update({"$set": fields_to_update})
     return user
 
 
@@ -299,7 +315,10 @@ async def create_userprofile(userprofile: UserProfile):
 @userprofiles_router.put("/userprofiles/{userprofile_id}", response_model=UserProfile)
 async def update_userprofile(userprofile_data: UserProfile, userprofile: UserProfile = Depends(get_userprofile)):
     fields_to_update = userprofile_data.dict()
-    fields_to_update.pop("_id",None) 
+    fields_to_update.pop("_id",None)      
+    fields_to_update.pop("user_alias",None) 
+    fields_to_update.pop("user_id",None)
+    
     userprofile_updated = await userprofile.update({"$set": fields_to_update})
     return userprofile_updated
 
@@ -307,7 +326,20 @@ async def update_userprofile(userprofile_data: UserProfile, userprofile: UserPro
 @userprofiles_router.put("/userprofiles/{userprofile_id}/update", response_model=UserProfile)
 async def update_userprofile(userprofile_id: PydanticObjectId, userprofile_data: Dict[str, Any]):
     userprofile = await UserProfile.get(userprofile_id)   
-    await userprofile.update({"$set": userprofile_data})
+       
+    if userprofile_data.get('user_alias') != None:
+        user_alias_ok = await check_user_alias_valid(userprofile.user_alias)
+        if not user_alias_ok:
+            raise HTTPException(status_code=404, detail="userprofile contains a user_alias invalid")   
+    if userprofile_data.get('user_id') != None:
+        user_id_ok = await check_user_id_valid(userprofile.user_id)
+        if not user_id_ok:
+            raise HTTPException(status_code=404, detail="userprofile contains a user_id invalid")
+    fields_to_update = userprofile_data
+    fields_to_update.pop("_id",None)      
+    fields_to_update.pop("user_alias",None) 
+    fields_to_update.pop("user_id",None)
+    await userprofile.update({"$set": fields_to_update})
     return userprofile
 
 
