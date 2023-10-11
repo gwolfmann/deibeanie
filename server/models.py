@@ -5,7 +5,9 @@ from enum import Enum
 from typing import Optional, List
 from datetime import datetime
 from pydantic_extra_types.phone_numbers import PhoneNumber
-
+from fastapi_users.db import BeanieBaseUser, BeanieUserDatabase
+from fastapi_users import schemas
+from beanie import PydanticObjectId
 
 
 class IngredientType(str,Enum): 
@@ -163,14 +165,11 @@ class Gender(str,Enum):
     FAMALE = 'FAMELE'  
     NOBINARY = 'NOBINARY'  
 
-class User(Document):  
+class User(BeanieBaseUser,Document):  
     name: str
     surname: str
     alias: Indexed(str, unique=True)
-    password: str
-    email: EmailStr
     role: UserRole
-    is_active: bool = True
     created_at: datetime = Field(default_factory=datetime.utcnow, auto_now_add=True)
     updated_at: datetime = Field(default_factory=datetime.utcnow, auto_now=True)
 async def get_user_by_name(name: str) -> User:
@@ -178,6 +177,40 @@ async def get_user_by_name(name: str) -> User:
     if user is None:
         return None
     return user
+
+async def get_user_db():
+    yield BeanieUserDatabase(User)
+
+class UserRead(schemas.BaseUser[PydanticObjectId]):
+    name: str
+    surname: str
+    alias: Indexed(str, unique=True)
+    role: UserRole
+    created_at: datetime = Field(default_factory=datetime.utcnow, auto_now_add=True)
+    updated_at: datetime = Field(default_factory=datetime.utcnow, auto_now=True)
+    pass
+
+
+class UserCreate(schemas.BaseUserCreate):
+    name: str
+    surname: str
+    alias: Indexed(str, unique=True)
+    role: UserRole
+    created_at: datetime = Field(default_factory=datetime.utcnow, auto_now_add=True)
+    updated_at: datetime = Field(default_factory=datetime.utcnow, auto_now=True)
+    pass
+
+
+class UserUpdate(schemas.BaseUserUpdate):
+    name: str
+    surname: str
+    alias: Indexed(str, unique=True)
+    role: UserRole
+    created_at: datetime = Field(default_factory=datetime.utcnow, auto_now_add=True)
+    updated_at: datetime = Field(default_factory=datetime.utcnow, auto_now=True)
+    pass
+
+
 
 class HealthProfile(BaseModel):  
     celiac: bool=False
