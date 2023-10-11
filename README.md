@@ -23,8 +23,8 @@ POST in /auth/jwt/login with
 username : yourmail@mail.com
 password : yourpassw
 
-as answer  it return your jwt token
+as answer it returns your jwt token
 
-3) use the jwt token as bearer auth in the rest of call
+3) use the jwt token as bearer auth for the rest of calls
 
 4) logout
