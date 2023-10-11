@@ -25,6 +25,6 @@ password : yourpassw
 
 as answer it returns your jwt token
 
-3) use the jwt token as bearer auth for the rest of calls
+3) use the jwt token as bearer auth for the rest of callshis
 
 4) logout
