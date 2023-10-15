@@ -9,10 +9,15 @@ from .users import auth_backend, current_active_user, fastapi_users
 
 app = FastAPI()
 
+class Settings:
+    #mongodb_url = "mongodb://localhost:27017/dei0"
+    mongodb_url = "mongodb+srv://gwolfmann:mBmtB6Hyx0MN4mQd@turnero.nmyvwbj.mongodb.net/?retryWrites=true&w=majority"
+
+
 @app.on_event("startup")
 async def start_beanie():
     # CREATE MOTOR CLIENT
-    client = AsyncIOMotorClient( "mongodb://localhost:27017/dei0", uuidRepresentation="standard" )
+    client = AsyncIOMotorClient( Settings.mongodb_url, uuidRepresentation="standard" )
     await init_beanie(client.dei0, document_models=[Ingredient, Recipe, MealPlan, User, UserProfile])
  
     app.include_router(ingredients_router, prefix="/meals", tags=["ingredient"],dependencies=[Depends(current_active_user)])  

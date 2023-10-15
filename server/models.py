@@ -1,6 +1,6 @@
 from beanie import Document, Indexed
 from pydantic.fields import Field
-from pydantic import BaseModel, EmailStr, PositiveInt, computed_field
+from pydantic import BaseModel, EmailStr, PositiveInt, computed_field, field_validator
 from enum import Enum
 from typing import Optional, List
 from datetime import datetime
@@ -91,9 +91,13 @@ class MealPlan(Document):
     name: Indexed(str, unique=True)
     foods: Optional[List[FoodInMealPlan]]
     obser: str
-    created_at: datetime = Field(default_factory=datetime.utcnow, auto_now_add=True)
-    updated_at: datetime = Field(default_factory=datetime.utcnow, auto_now=True)
-
+    created_at: datetime = Field(default_factory=datetime.utcnow)
+    updated_at: datetime = Field(default_factory=datetime.utcnow)
+    @field_validator('updated_at')
+    @classmethod
+    def date_update(cls, v: datetime) -> datetime:
+        cls.updated_at = datetime.utcnow()
+        return cls.updated_at #datetime.utcnow()
 
 class USAStates(str,Enum): 
     AL = 'Alabama'  

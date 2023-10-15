@@ -1,0 +1,48 @@
+[{
+  "_id": {
+    "$oid": "6514bab1a2ffca8609ba7af5"
+  },
+  "name": "Aceite Girasol hidrogenado",
+  "aliment_types": [
+    "fat",
+    "other"
+  ],
+  "id": null
+},
+{
+  "_id": {
+    "$oid": "6515a258d69991ac5dc0f538"
+  },
+  "name": "Azucar",
+  "aliment_types": [
+    "sugar"
+  ]
+},
+{
+  "_id": {
+    "$oid": "651dfabc1ce1fffa64e2776b"
+  },
+  "name": "Sal",
+  "aliment_types": [
+    "sodium"
+  ],
+  "id": null
+},
+{
+  "_id": {
+    "$oid": "651dfaf21ce1fffa64e2776c"
+  },
+  "name": "Pimienta",
+  "aliment_types": [
+    "other"
+  ]
+},
+{
+  "_id": {
+    "$oid": "652719420c61a4a698e4aa97"
+  },
+  "name": "Comino",
+  "aliment_types": [
+    "other"
+  ]
+}]

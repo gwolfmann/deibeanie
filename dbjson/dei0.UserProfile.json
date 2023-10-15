@@ -1,0 +1,27 @@
+[{
+  "_id": {
+    "$oid": "651f3d3036831c32096de6b4"
+  },
+  "user_id": "651ef9b77ec481a5a9705870",
+  "user_alias": "gwolf",
+  "phone_number": "tel:+1-742-554-8890",
+  "gender": "MALE",
+  "zipcode": 331540,
+  "city": "Ft Lauderdale",
+  "state": "Florida",
+  "nationality": "American",
+  "metric_unit": {
+    "muselected": "DECIMAL"
+  },
+  "height": 178,
+  "starting_weight": 130,
+  "health_profile": null,
+  "foods_profile": null,
+  "habits_profile": null,
+  "created_at": {
+    "$date": "2023-10-05T22:48:16.835Z"
+  },
+  "updated_at": {
+    "$date": "2023-10-05T22:48:16.835Z"
+  }
+}]

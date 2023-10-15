@@ -1,0 +1,148 @@
+[{
+  "_id": {
+    "$oid": "65160eb927867607b3c80b06"
+  },
+  "name": "fasta frola de membrillo.",
+  "foods": [
+    {
+      "portion": 1.25,
+      "measure_unit": "unit",
+      "recipe_name": "Pasta Frola",
+      "kom": "ot",
+      "dow": "su"
+    },
+    {
+      "portion": 0.25,
+      "measure_unit": "unit",
+      "recipe_name": "Receta muy dulce",
+      "kom": "br",
+      "dow": null
+    }
+  ],
+  "obser": "Me gusta con membrillo."
+},
+{
+  "_id": {
+    "$oid": "65164a781aa1f6236660c876"
+  },
+  "name": "My third Plan",
+  "foods": [
+    {
+      "recipe_name": "Recipe",
+      "portion": 1,
+      "measure_unit": "gr",
+      "kom": "br",
+      "dow": "mo"
+    }
+  ],
+  "obser": "This is my meal plan for the week."
+},
+{
+  "_id": {
+    "$oid": "65164b06e811a1d34a7d5db5"
+  },
+  "name": "third Plan",
+  "foods": [
+    {
+      "recipe_name": "Recipe",
+      "portion": 1,
+      "measure_unit": "gr",
+      "kom": "br",
+      "dow": "mo"
+    }
+  ],
+  "obser": "This is my meal plan for the week."
+},
+{
+  "_id": {
+    "$oid": "65164b8920a88bbdaa89f516"
+  },
+  "name": "your third Plan",
+  "foods": [
+    {
+      "portion": 1.5,
+      "measure_unit": "unit",
+      "recipe_name": "Receta muy dulce",
+      "kom": "br",
+      "dow": null
+    }
+  ],
+  "obser": "This is my meal plan for the week."
+},
+{
+  "_id": {
+    "$oid": "65165422df6c359d6ff80502"
+  },
+  "name": "your second Plan",
+  "foods": [
+    {
+      "recipe_name": "Recipe",
+      "portion": 1,
+      "measure_unit": "gr",
+      "kom": "br",
+      "dow": "mo"
+    }
+  ],
+  "obser": "This is my meal plan for the week."
+},
+{
+  "_id": {
+    "$oid": "651703b4c491d72337079c93"
+  },
+  "name": "your Plan AA",
+  "foods": [
+    {
+      "portion": 1,
+      "measure_unit": "gr",
+      "recipe_name": "torta frita",
+      "kom": "br",
+      "dow": "mo"
+    }
+  ],
+  "obser": "This is my meal plan for the week."
+},
+{
+  "_id": {
+    "$oid": "6517429c88d6ac7805510744"
+  },
+  "name": "Desayuno importante",
+  "foods": [
+    {
+      "portion": 0.25,
+      "measure_unit": "unit",
+      "recipe_name": "Receta muy dulce",
+      "kom": "br",
+      "dow": null
+    },
+    {
+      "portion": 1,
+      "measure_unit": "unit",
+      "recipe_name": "torta frita",
+      "kom": "ma",
+      "dow": null
+    }
+  ],
+  "obser": "Desayuno proteico."
+},
+{
+  "_id": {
+    "$oid": "651dfbae1ce1fffa64e2776e"
+  },
+  "name": "Merienda Portente",
+  "foods": [
+    {
+      "portion": 1,
+      "measure_unit": "unit",
+      "recipe_name": "Receta muy dulce",
+      "kom": "br",
+      "dow": "mo"
+    }
+  ],
+  "obser": "Merienda altamente proteica y buena.",
+  "created_at": {
+    "$date": "2023-10-04T23:56:30.988Z"
+  },
+  "updated_at": {
+    "$date": "2023-10-13T05:14:40.076Z"
+  }
+}]

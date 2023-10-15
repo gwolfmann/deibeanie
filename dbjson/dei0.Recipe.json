@@ -1,0 +1,223 @@
+[{
+  "_id": {
+    "$oid": "6514c33ba7f3f20671801369"
+  },
+  "name": "Receta muy dulce",
+  "ingredients": [
+    {
+      "ingredient": {
+        "_id": null,
+        "revision_id": null,
+        "name": "Azucar",
+        "aliment_types": [
+          "sugar"
+        ]
+      },
+      "quantity": 1,
+      "measure_unit": "unit"
+    },
+    {
+      "ingredient": {
+        "_id": null,
+        "revision_id": null,
+        "name": "Harina",
+        "aliment_types": [
+          "fat"
+        ]
+      },
+      "quantity": 100,
+      "measure_unit": "gr"
+    }
+  ],
+  "preparation": "coccion a fuego suave 30 minutos"
+},
+{
+  "_id": {
+    "$oid": "651587cbc4e209ea119c037b"
+  },
+  "name": "My Recipe",
+  "ingredients": [
+    {
+      "ingredient": {
+        "_id": null,
+        "revision_id": null,
+        "name": "Flour",
+        "aliment_types": [
+          "other"
+        ]
+      },
+      "quantity": 250,
+      "measure_unit": "gr"
+    },
+    {
+      "ingredient": {
+        "_id": null,
+        "revision_id": null,
+        "name": "Eggs",
+        "aliment_types": [
+          "other"
+        ]
+      },
+      "quantity": 2,
+      "measure_unit": "unit"
+    }
+  ],
+  "preparation": "Mix the ingredients together and bake at 350 degrees Fahrenheit for 30 minutes."
+},
+{
+  "_id": {
+    "$oid": "65159f990f18c3a46c6d859c"
+  },
+  "name": "torta frita",
+  "ingredients": [
+    {
+      "ingredient": {
+        "id": null,
+        "revision_id": null,
+        "name": "Flour",
+        "aliment_types": [
+          "other"
+        ]
+      },
+      "quantity": 1,
+      "measure_unit": "unit"
+    },
+    {
+      "ingredient": {
+        "id": null,
+        "revision_id": null,
+        "name": "Eggs",
+        "aliment_types": [
+          "other"
+        ]
+      },
+      "quantity": 2,
+      "measure_unit": "unit"
+    },
+    {
+      "ingredient": {
+        "id": null,
+        "revision_id": null,
+        "name": "Sugar",
+        "aliment_types": [
+          "sugar"
+        ]
+      },
+      "quantity": 100,
+      "measure_unit": "gr"
+    }
+  ],
+  "preparation": "Mix the ingredients together and bake at 350 degrees Fahrenheit for 30 minutes.",
+  "id": "65159f990f18c3a46c6d859c"
+},
+{
+  "_id": {
+    "$oid": "651741754682a09adb9dfb5f"
+  },
+  "name": "Pasta Frola",
+  "ingredients": [
+    {
+      "ingredient": {
+        "_id": null,
+        "revision_id": null,
+        "name": "Flour",
+        "aliment_types": [
+          "other"
+        ]
+      },
+      "quantity": 250,
+      "measure_unit": "gr"
+    },
+    {
+      "ingredient": {
+        "_id": null,
+        "revision_id": null,
+        "name": "Eggs",
+        "aliment_types": [
+          "other"
+        ]
+      },
+      "quantity": 2,
+      "measure_unit": "unit"
+    },
+    {
+      "ingredient": {
+        "_id": null,
+        "revision_id": null,
+        "name": "Sugar",
+        "aliment_types": [
+          "sugar"
+        ]
+      },
+      "quantity": 200,
+      "measure_unit": "gr"
+    }
+  ],
+  "preparation": "Mix the ingredients together and bake at 350 degrees Fahrenheit for 30 minutes."
+},
+{
+  "_id": {
+    "$oid": "651dfb691ce1fffa64e2776d"
+  },
+  "name": "Torta Frita",
+  "ingredients": [
+    {
+      "ingredient": {
+        "_id": null,
+        "revision_id": null,
+        "name": "Flour",
+        "aliment_types": [
+          "other"
+        ]
+      },
+      "quantity": 150,
+      "measure_unit": "gr"
+    },
+    {
+      "ingredient": {
+        "_id": null,
+        "revision_id": null,
+        "name": "Eggs",
+        "aliment_types": [
+          "other"
+        ]
+      },
+      "quantity": 1,
+      "measure_unit": "unit"
+    },
+    {
+      "ingredient": {
+        "_id": null,
+        "revision_id": null,
+        "name": "Sal",
+        "aliment_types": [
+          "sodium"
+        ]
+      },
+      "quantity": 2,
+      "measure_unit": "gr"
+    }
+  ],
+  "preparation": "Mezclar todo y freir."
+},
+{
+  "_id": {
+    "$oid": "651edac7c36c9e75c85c9ed8"
+  },
+  "name": "Receta 77",
+  "ingredients": [
+    {
+      "ingredient": {
+        "_id": null,
+        "revision_id": null,
+        "name": "Azucar",
+        "aliment_types": [
+          "sugar"
+        ]
+      },
+      "quantity": 1,
+      "measure_unit": "unit"
+    }
+  ],
+  "preparation": "Instrucciones tiene por ahora"
+}]
